@@ -1,4 +1,5 @@
-#heading{
-    color: blue;
-    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+.headingclass {
+  font-family: "Times New Roman", Times, serif;
+  font-size: larger;
+  color: brown;
 }

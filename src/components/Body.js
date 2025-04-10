@@ -1,7 +1,9 @@
 import RestaurantCard from "./RestaurantCard";
-import restaurantList from "../utils/mockData";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
+import { GET_RESTAURANTS_URL } from "../utils/constants";
+import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   const [listofRestaurants, setListofRestaurants] = useState([]);
@@ -16,10 +18,7 @@ const Body = () => {
 
   const fetchData = async () => {
     try {
-      console.log("hello");
-      let data = await fetch(
-        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9352403&lng=77.624532&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-      );
+      let data = await fetch(GET_RESTAURANTS_URL);
 
       const json = await data.json();
       setListofRestaurants(
@@ -34,6 +33,16 @@ const Body = () => {
       console.log(error);
     }
   };
+
+  if (!useOnlineStatus()) {
+    return (
+      <h1>
+        OOPS📛🛜..!!Looks like you are offline. Please check your Internet
+        Connection and try again...
+      </h1>
+    );
+  }
+
   //Conditional Rendering
   return listofRestaurants?.length === 0 ? (
     <Shimmer />
@@ -73,7 +82,7 @@ const Body = () => {
           className="filter-btn"
           onClick={() => {
             const filteredList = listofRestaurants.filter(
-              (res) => res.data.avgRating > 4
+              (res) => res.info.avgRating > 4.5
             );
             setFilteredListofRestaurants(filteredList);
           }}
@@ -83,7 +92,13 @@ const Body = () => {
       </div>
       <div className="res-container">
         {filteredListofRestaurants.map((restaurant) => (
-          <RestaurantCard key={restaurant.info.id} ResData={restaurant} />
+          <Link
+            style={{ textDecoration: "none", color: "black" }}
+            key={restaurant.info.id}
+            to={"/restaurant/" + restaurant.info.id}
+          >
+            <RestaurantCard ResData={restaurant} />
+          </Link>
         ))}
       </div>
     </div>

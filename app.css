@@ -88,3 +88,18 @@
 .search-box {
   margin: 10px;
 }
+
+.user-card {
+  margin: 10px;
+  border: 1px solid grey;
+  width: 400px;
+  padding: 20px;
+}
+
+.user-container {
+  display: flex;
+}
+.vote-btn {
+  height: 40px;
+  width: 80px;
+}

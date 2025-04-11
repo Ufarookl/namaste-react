@@ -11,7 +11,11 @@ const Header = () => {
     <div className="flex justify-between bg-pink-300 shadow-lg">
       <div className="logo-container">
         <Link to="/">
-          <img className="w-[110px]" src={LOGO_URL} alt="Food Logo"></img>
+          <img
+            className="w-[110px] cursor-pointer"
+            src={LOGO_URL}
+            alt="Food Logo"
+          ></img>
         </Link>
       </div>
       <div className="flex items-center justify-between">
@@ -19,18 +23,18 @@ const Header = () => {
           <li className="px-[10px]">
             Online Status :{onlineStatus ? "✅" : "🔴"}
           </li>
-          <li className="px-[10px]">
+          <li className="px-[10px] cursor-pointer">
             <Link to="/">Home</Link>
           </li>
-          <li className="px-[10px]">
+          <li className="px-[10px] cursor-pointer">
             <Link to="/about">About Us</Link>
           </li>
-          <li className="px-[10px]">
+          <li className="px-[10px] cursor-pointer">
             <Link to="/contact">Contact Us</Link>
           </li>
-          <li className="px-[15px]">Cart</li>
+          <li className="px-[15px] cursor-pointer">Cart</li>
           <button
-            className="log-btn"
+            className="log-btn cursor-pointer"
             onClick={() => {
               btnName === "Login" ? setBtnName("Logout") : setBtnName("Login");
             }}

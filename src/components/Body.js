@@ -1,4 +1,4 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { GET_RESTAURANTS_URL } from "../utils/constants";
@@ -11,6 +11,8 @@ const Body = () => {
   const [filteredListofRestaurants, setFilteredListofRestaurants] = useState(
     []
   );
+
+  const RestaurantPromoted = withPromotedLabel(RestaurantCard);
 
   useEffect(() => {
     fetchData();
@@ -67,7 +69,7 @@ const Body = () => {
             }}
           ></input>
           <button
-            className="px-4 py-2 m-4 bg-green-100 rounded-lg"
+            className="px-4 py-2 m-4 bg-green-100 rounded-lg cursor-pointer"
             onClick={() => {
               const filteredrestaurant = listofRestaurants.filter((res) =>
                 res.info.name.toLowerCase().includes(searchText.toLowerCase())
@@ -80,7 +82,7 @@ const Body = () => {
         </div>
         <div className="m-2 p-2 flex items-center">
           <button
-            className="px-4 py-2 m-4 bg-green-100 rounded-lg"
+            className="px-4 py-2 m-4 bg-green-100 rounded-lg cursor-pointer+"
             onClick={() => {
               const filteredList = listofRestaurants.filter(
                 (res) => res.info.avgRating > 4.5
@@ -99,7 +101,11 @@ const Body = () => {
             key={restaurant.info.id}
             to={"/restaurant/" + restaurant.info.id}
           >
-            <RestaurantCard ResData={restaurant} />
+            {restaurant.info.avgRating > 4.2 ? (
+              <RestaurantPromoted ResData={restaurant} />
+            ) : (
+              <RestaurantCard ResData={restaurant} />
+            )}
           </Link>
         ))}
       </div>

@@ -2,9 +2,10 @@ import { RES_LOGO_URL } from "../utils/constants";
 
 const RestaurantCard = (props) => {
   const { ResData } = props;
+  //console.log("props - ", props);
 
   const { name, avgRating, cuisines, costForTwo, sla, cloudinaryImageId } =
-    ResData?.info;
+    ResData;
 
   return (
     <div className="m-4 p-4 w-[280px] wrap-break-word bg-gray-100 hover:bg-gray-300 rounded-lg">

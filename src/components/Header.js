@@ -13,6 +13,7 @@ const Header = () => {
   const cartItems = useSelector((store) => store.cart.items);
 
   const onlineStatus = useOnlineStatus();
+
   return (
     <div className="flex justify-between bg-pink-300 shadow-lg">
       <div className="logo-container">
@@ -39,7 +40,7 @@ const Header = () => {
             <Link to="/contact">Contact Us</Link>
           </li>
           <li className="px-[15px] cursor-pointer font-bold">
-            Cart ({cartItems.length})
+            <Link to="/cart"> Cart ({cartItems.length})</Link>
           </li>
           <button
             className="log-btn cursor-pointer"

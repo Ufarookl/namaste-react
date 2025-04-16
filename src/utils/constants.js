@@ -9,3 +9,6 @@ export const RES_LOGO_URL =
 
 export const MENU_API_URL =
   "https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=12.9352403&lng=77.624532&restaurantId=";
+
+export const STAR_IMG_URL =
+  "https://media.lordicon.com/icons/wired/lineal/237-star-rating.svg";

@@ -21,11 +21,6 @@ const RestaurantMenu = () => {
       "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
   );
 
-  console.log("cards -", categories);
-
-  let itemCards =
-    cards.find((c) => c?.card?.card?.itemCards)?.card?.card?.itemCards || [];
-
   const { name, cuisines, costForTwoMessage } =
     resInfo?.cards[2]?.card?.card?.info;
 
@@ -37,7 +32,7 @@ const RestaurantMenu = () => {
       </p>
       {categories.map((category, index) => (
         <RestaurantCategory
-          key={category?.card?.card?.categoryId}
+          key={category?.card?.card?.categoryId + index}
           data={category?.card?.card}
           showItem={index === showIndex ? true : false}
           setShowIndex={() => setShowIndex(index)}

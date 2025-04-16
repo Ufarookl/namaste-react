@@ -1,40 +1,18 @@
 import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Shimmer from "./Shimmer";
-import { GET_RESTAURANTS_URL } from "../utils/constants";
+
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
 
+import useRestaurantList from "../utils/useRestaurantList";
+
 const Body = () => {
-  const [listofRestaurants, setListofRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [filteredListofRestaurants, setFilteredListofRestaurants] = useState(
-    []
-  );
+
+  const [listofRestaurants, filteredListofRestaurants] = useRestaurantList();
 
   const RestaurantPromoted = withPromotedLabel(RestaurantCard);
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  const fetchData = async () => {
-    try {
-      let data = await fetch(GET_RESTAURANTS_URL);
-
-      const json = await data.json();
-      setListofRestaurants(
-        json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants
-      );
-      setFilteredListofRestaurants(
-        json?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   if (!useOnlineStatus()) {
     return (
@@ -54,8 +32,9 @@ const Body = () => {
         <div className="search-filter m-[10px] p-[10px]">
           <input
             type="text"
-            className="border border-solid border-black"
+            className="border border-solid border-black h-9 rounded-lg px-4 w-65"
             value={searchText}
+            placeholder="Search for restaurants and food"
             onChange={(e) => {
               setSearchText(e.target.value);
               const filteredrestaurant = listofRestaurants.filter((res) =>
@@ -80,9 +59,9 @@ const Body = () => {
             Search
           </button>
         </div>
-        <div className="m-2 p-2 flex items-center">
+        <div className="flex items-center">
           <button
-            className="px-4 py-2 m-4 bg-green-100 rounded-lg cursor-pointer+"
+            className="px-2 py-2 bg-green-100 rounded-lg cursor-pointer"
             onClick={() => {
               const filteredList = listofRestaurants.filter(
                 (res) => res.info.avgRating > 4.5

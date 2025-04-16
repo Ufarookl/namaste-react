@@ -1,5 +1,5 @@
 import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 
 import { Link } from "react-router-dom";
@@ -10,7 +10,15 @@ import useRestaurantList from "../utils/useRestaurantList";
 const Body = () => {
   const [searchText, setSearchText] = useState("");
 
-  const [listofRestaurants, filteredListofRestaurants] = useRestaurantList();
+  const [listofRestaurants, newFilteredList] = useRestaurantList();
+
+  const [filteredListofRestaurants, setFilteredListofRestaurants] =
+    useState(null);
+
+  useEffect(() => {
+    if (listofRestaurants.length > 0)
+      setFilteredListofRestaurants(listofRestaurants);
+  }, [listofRestaurants]);
 
   const RestaurantPromoted = withPromotedLabel(RestaurantCard);
 
@@ -64,7 +72,7 @@ const Body = () => {
             className="px-2 py-2 bg-green-100 rounded-lg cursor-pointer"
             onClick={() => {
               const filteredList = listofRestaurants.filter(
-                (res) => res.info.avgRating > 4.5
+                (res) => res.info.avgRating > 4.3
               );
               setFilteredListofRestaurants(filteredList);
             }}
@@ -74,19 +82,20 @@ const Body = () => {
         </div>
       </div>
       <div className="flex flex-wrap">
-        {filteredListofRestaurants.map((restaurant) => (
-          <Link
-            style={{ textDecoration: "none", color: "black" }}
-            key={restaurant.info.id}
-            to={"/restaurant/" + restaurant.info.id}
-          >
-            {restaurant.info.avgRating > 4.2 ? (
-              <RestaurantPromoted ResData={restaurant?.info} />
-            ) : (
-              <RestaurantCard ResData={restaurant?.info} />
-            )}
-          </Link>
-        ))}
+        {filteredListofRestaurants != null &&
+          filteredListofRestaurants.map((restaurant) => (
+            <Link
+              style={{ textDecoration: "none", color: "black" }}
+              key={restaurant.info.id}
+              to={"/restaurant/" + restaurant.info.id}
+            >
+              {restaurant.info.avgRating > 4.2 ? (
+                <RestaurantPromoted ResData={restaurant?.info} />
+              ) : (
+                <RestaurantCard ResData={restaurant?.info} />
+              )}
+            </Link>
+          ))}
       </div>
     </div>
   );

@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 
 import { Link } from "react-router-dom";
-import useOnlineStatus from "../utils/useOnlineStatus";
+import useOnlineStatus from "../Hooks/useOnlineStatus";
 
-import useRestaurantList from "../utils/useRestaurantList";
+import useRestaurantList from "../Hooks/useRestaurantList";
 
 const Body = () => {
   const [searchText, setSearchText] = useState("");
